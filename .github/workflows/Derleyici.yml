@@ -33,7 +33,8 @@ jobs:
           path: "builds"
 
       - name: Eski Derlemeleri Temizle
-        run: rm -rf $GITHUB_WORKSPACE/builds/* || true
+        run: rm $GITHUB_WORKSPACE/builds/*.cs3 || true
+
 
       - name: JDK 17 Ayarla
         uses: actions/setup-java@v4.6.0
