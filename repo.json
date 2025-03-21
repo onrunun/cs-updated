@@ -1,0 +1,8 @@
+{
+  "name": "Turkish Providers Repository | Edited",
+  "description": "Türkçe içerikli eklenti havuzu Edited",
+  "manifestVersion": 1,
+  "pluginLists": [
+    "https://raw.githubusercontent.com/onrunun/cs-Kekik/builds/plugins.json"
+  ]
+}
