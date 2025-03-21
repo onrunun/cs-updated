@@ -31,6 +31,23 @@ jobs:
         with:
           ref: "builds"
           path: "builds"
+        continue-on-error: true  # Bu adım başarısız olsa bile devam et
+
+      - name: "Builds branch yoksa oluştur"
+        run: |
+          if [ ! -d "builds/.git" ]; then
+            mkdir -p builds
+            cd builds
+            git init
+            git config --local user.email "actions@github.com"
+            git config --local user.name "GitHub Actions"
+            git remote add origin https://github.com/${{ github.repository }}.git
+            git checkout -b builds
+            touch README.md
+            echo "# CloudStream Builds" > README.md
+            git add README.md
+            git commit -m "Initial commit for builds branch"
+          fi
 
       - name: Eski Derlemeleri Temizle
         run: rm $GITHUB_WORKSPACE/builds/*.cs3 || true
@@ -49,8 +66,8 @@ jobs:
           cd $GITHUB_WORKSPACE/src
           chmod +x gradlew
           ./gradlew make makePluginsJson
-          cp **/build/*.cs3 $GITHUB_WORKSPACE/builds
-          cp build/plugins.json $GITHUB_WORKSPACE/builds
+          cp **/build/*.cs3 $GITHUB_WORKSPACE/builds || true
+          cp build/plugins.json $GITHUB_WORKSPACE/builds || true
 
       - name: Derlemeleri Yükle
         run: |
@@ -59,4 +76,4 @@ jobs:
           git config --local user.name "GitHub Actions"
           git add .
           git commit --amend -m "$GITHUB_SHA 'nın Derlenmesi" || exit 0   # eğer commit edilecek bir şey yoksa hata verme
-          git push --force
+          git push --force origin builds
