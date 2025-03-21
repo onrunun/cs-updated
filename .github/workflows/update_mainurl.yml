@@ -1,0 +1,30 @@
+name: Update MainUrl
+
+on:
+  push:
+    branches:
+      - master
+  workflow_dispatch:
+  schedule:
+    - cron: "0 * * * *"  # Her saat başı çalıştır
+
+jobs:
+  update-mainurl:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Run URL Updater
+        run: |
+          chmod +x update_mainurl.sh
+          ./update_mainurl.sh
+
+      - name: Commit and Push changes
+        run: |
+          git config --global user.name "github-actions"
+          git config --global user.email "github-actions@github.com"
+          git add .
+          git commit -m "Update mainUrl values [CI]" || echo "No changes to commit"
+          git push
