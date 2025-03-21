@@ -9,7 +9,7 @@ import com.lagradost.cloudstream3.extractors.helper.AesHelper
 
 class MixPlayHD : ExtractorApi() {
     override var name            = "MixPlayHD"
-    override var mainUrl         = "https://mixplayhd.com"
+    override var mainUrl         = "https://mixplayhd.com/"
     override val requiresReferer = true
 
     override suspend fun getUrl(url: String, referer: String?, subtitleCallback: (SubtitleFile) -> Unit, callback: (ExtractorLink) -> Unit) {

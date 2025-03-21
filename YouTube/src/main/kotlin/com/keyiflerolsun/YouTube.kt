@@ -8,7 +8,7 @@ import com.lagradost.cloudstream3.utils.AppUtils.tryParseJson
 import com.lagradost.cloudstream3.utils.StringUtils.encodeUri
 
 class YouTube : MainAPI() {
-    override var mainUrl              = "https://iv.ggtyler.dev" // ! https://inv.nadeko.net
+    override var mainUrl              = "https://nyc1.iv.ggtyler.dev/feed/popular" // ! https://inv.nadeko.net
     override var name                 = "YouTube"
     override val hasMainPage          = true
     override var lang                 = "tr"

@@ -22,7 +22,7 @@ import org.jsoup.nodes.Element
 
 class Watch32Provider : MainAPI() {
 
-    override var mainUrl = "https://watch32.sx"
+    override var mainUrl = "https://watch32.sx/"
     override var name = "Watch32"
     override val supportedTypes = setOf(
         TvType.Movie,

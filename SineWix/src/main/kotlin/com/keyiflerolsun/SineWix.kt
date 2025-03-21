@@ -8,7 +8,7 @@ import com.lagradost.cloudstream3.utils.*
 import com.lagradost.cloudstream3.LoadResponse.Companion.addActors
 
 class SineWix : MainAPI() {
-    override var mainUrl              = "https://ythls.kekikakademi.org"
+    override var mainUrl              = "https://ythls.kekikakademi.org/"
     override var name                 = "SineWix"
     override val hasMainPage          = true
     override var lang                 = "tr"

@@ -24,7 +24,7 @@ import com.lagradost.cloudstream3.utils.INFER_TYPE
 import org.jsoup.nodes.Element
 
 class YTSMX : YTS(){
-    override var mainUrl              = "https://yts.mx"
+    override var mainUrl              = "https://yts.mx/"
     override var name                 = "YTS MX"
     override val hasMainPage          = true
     override var lang                 = "en"

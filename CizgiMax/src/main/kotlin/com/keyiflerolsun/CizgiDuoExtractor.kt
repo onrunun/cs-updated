@@ -9,7 +9,7 @@ import com.lagradost.cloudstream3.extractors.helper.AesHelper
 
 open class CizgiDuo : ExtractorApi() {
     override var name            = "CizgiDuo"
-    override var mainUrl         = "https://cizgiduo.online"
+    override var mainUrl         = "http://ww25.cizgiduo.online/?subid1=20250322-0742-475a-9d92-a4052e4dbcf3"
     override val requiresReferer = true
 
     override suspend fun getUrl(url: String, referer: String?, subtitleCallback: (SubtitleFile) -> Unit, callback: (ExtractorLink) -> Unit) {

@@ -9,7 +9,7 @@ import org.jsoup.nodes.Element
 import java.lang.RuntimeException
 
 class TwitchProvider : MainAPI() {
-    override var mainUrl              = "https://twitchtracker.com" // Easiest to scrape
+    override var mainUrl              = "https://twitchtracker.com/" // Easiest to scrape
     override var name                 = "Twitch"
     override val hasMainPage          = true
     override var lang                 = "uni"
