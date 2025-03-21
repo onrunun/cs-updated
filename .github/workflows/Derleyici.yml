@@ -31,23 +31,9 @@ jobs:
         with:
           ref: "builds"
           path: "builds"
-        continue-on-error: true  # Bu adım başarısız olsa bile devam et
-
-      - name: "Builds sil oluştur"
-        run: |
-          if [ -d "builds" ]; then
-            rm -rf builds
-          fi
-          mkdir builds
-          cd builds
-          git init
-          git config --local user.email "actions@github.com"
-          git config --local user.name "GitHub Actions"
-          git remote add origin https://github.com/${{ github.repository }}.git
-          git checkout -b builds
 
       - name: Eski Derlemeleri Temizle
-        run: rm $GITHUB_WORKSPACE/builds/*.cs3 || true
+        run: rm $GITHUB_WORKSPACE/builds/* || true
 
       - name: JDK 17 Ayarla
         uses: actions/setup-java@v4.6.0
@@ -63,8 +49,8 @@ jobs:
           cd $GITHUB_WORKSPACE/src
           chmod +x gradlew
           ./gradlew make makePluginsJson
-          cp **/build/*.cs3 $GITHUB_WORKSPACE/builds || true
-          cp build/plugins.json $GITHUB_WORKSPACE/builds || true
+          cp **/build/*.cs3 $GITHUB_WORKSPACE/builds
+          cp build/plugins.json $GITHUB_WORKSPACE/builds
 
       - name: Derlemeleri Yükle
         run: |
@@ -73,4 +59,4 @@ jobs:
           git config --local user.name "GitHub Actions"
           git add .
           git commit --amend -m "$GITHUB_SHA 'nın Derlenmesi" || exit 0   # eğer commit edilecek bir şey yoksa hata verme
-          git push --force origin builds
+          git push --force
