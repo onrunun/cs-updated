@@ -3,6 +3,6 @@
   "description": "Türkçe içerikli eklenti havuzu Edited",
   "manifestVersion": 1,
   "pluginLists": [
-    "https://raw.githubusercontent.com/onrunun/cs-Kekik/refs/heads/master/plugins.json"
+    "https://raw.githubusercontent.com/onrunun/cs-updated/refs/heads/master/plugins.json"
   ]
 }
