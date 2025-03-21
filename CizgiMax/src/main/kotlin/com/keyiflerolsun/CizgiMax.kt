@@ -8,7 +8,7 @@ import com.lagradost.cloudstream3.*
 import com.lagradost.cloudstream3.utils.*
 
 class CizgiMax : MainAPI() {
-    override var mainUrl              = "https://cizgimax.online/"
+    override var mainUrl              = "https://cizgimax.online"
     override var name                 = "CizgiMax"
     override val hasMainPage          = true
     override var lang                 = "tr"

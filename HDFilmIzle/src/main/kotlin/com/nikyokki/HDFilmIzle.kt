@@ -15,7 +15,7 @@ import com.fasterxml.jackson.module.kotlin.readValue
 import org.jsoup.Jsoup
 
 class HDFilmIzle : MainAPI() {
-    override var mainUrl              = "https://www.hdfilmizle.to/"
+    override var mainUrl              = "https://www.hdfilmizle.to"
     override var name                 = "HDFilmİzle"
     override val hasMainPage          = true
     override var lang                 = "tr"
@@ -67,9 +67,9 @@ class HDFilmIzle : MainAPI() {
 
     override suspend fun search(query: String): List<SearchResponse> {
         val response      = app.post(
-            "https://www.hdfilmizle.to//search/",
+            "https://www.hdfilmizle.to/search/",
             headers = mapOf("X-Requested-With" to "XMLHttpRequest"),
-            referer = "https://www.hdfilmizle.to/",
+            referer = "https://www.hdfilmizle.to",
             data    = mapOf("query" to query)
         ).document
         val searchResults = mutableListOf<SearchResponse>()

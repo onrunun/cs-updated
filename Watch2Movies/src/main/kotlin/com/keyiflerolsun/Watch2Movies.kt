@@ -10,7 +10,7 @@ import com.lagradost.cloudstream3.LoadResponse.Companion.addActors
 import com.lagradost.cloudstream3.LoadResponse.Companion.addTrailer
 
 class Watch2Movies : MainAPI() {
-    override var mainUrl              = "https://watch2movies.net/"
+    override var mainUrl              = "https://watch2movies.net"
     override var name                 = "Watch2Movies"
     override val hasMainPage          = true
     override var lang                 = "en"
@@ -133,10 +133,10 @@ class Watch2Movies : MainAPI() {
             // Log.d("W2M", "iframe » ${dataSource!!.link}")
 
             // // ?   master  adb logcat -v tag | logcat-colorize | grep "W2M" 
-            // // ! D   W2M      data   » https://watch2movies.net//movie/watch-ferry-2-full-118828
+            // // ! D   W2M      data   » https://watch2movies.net/movie/watch-ferry-2-full-118828
             // // * D   W2M      iframe » https://hanatyury.online/v2/embed-4/NDCSpcJUwFUT?z=
             // // * D   W2M      iframe » https://pepepeyo.xyz/v2/embed-4/MfDjL0xjrfrX?z=
-            // // ! D   W2M      data   » https://watch2movies.net//movie/watch-adam-full-1542
+            // // ! D   W2M      data   » https://watch2movies.net/movie/watch-adam-full-1542
             // // * D   W2M      iframe » https://hanatyury.online/v2/embed-4/0DMRS34RzDzF?z=
             // // * D   W2M      iframe » https://hanatyury.online/v2/embed-4/j3MXnGNwTkdx?z=
             // // * D   W2M      iframe » https://upstream.to/embed-tigfkb1a9wol.html
