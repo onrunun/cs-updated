@@ -1,9 +1,7 @@
 name: CloudStream Derleyici
-
 concurrency:
   group: ${{ github.workflow }}-${{ github.event_name }}-${{ github.ref }}
   cancel-in-progress: true
-
 on:
   workflow_dispatch:
   push:
@@ -15,54 +13,46 @@ on:
       - "**/*.jpg"
       - "**/*.png"
       - "**/*.py"
-
 jobs:
   CloudStreamDerleyici:
     runs-on: ubuntu-latest
     steps:
-      - name: "'src' Depo Kontrolü"
+      - name: "Kaynak Kod Kontrolü"
         uses: actions/checkout@v4.2.2
         with:
           path: "src"
           fetch-depth: 0
-
-      - name: "'build' Depo Kontrolü"
-        uses: actions/checkout@v4.2.2
-        with:
-          ref: "master"
-          path: "builds"
-
-
-      - name: Eski Derlemeleri Temizle
-        run: |
-          if [ -f "$GITHUB_WORKSPACE/builds/*.cs3" ]; then
-            rm $GITHUB_WORKSPACE/builds/*.cs3
-          else
-            echo "Derleme dosyası bulunamadı, devam ediliyor."
-          fi
-
       - name: JDK 17 Ayarla
         uses: actions/setup-java@v4.6.0
         with:
           distribution: adopt
           java-version: 17
-
       - name: Android SDK Ayarla
         uses: android-actions/setup-android@v3.2.2
-
       - name: Eklentileri Derle
         run: |
           cd $GITHUB_WORKSPACE/src
           chmod +x gradlew
           ./gradlew make makePluginsJson
-          cp **/build/*.cs3 $GITHUB_WORKSPACE/builds
-          cp build/plugins.json $GITHUB_WORKSPACE/builds
-
+          mkdir -p $GITHUB_WORKSPACE/output
+          cp **/build/*.cs3 $GITHUB_WORKSPACE/output/ || echo "No .cs3 files found to copy"
+          cp build/plugins.json $GITHUB_WORKSPACE/output/ || echo "No plugins.json found to copy"
       - name: Derlemeleri Yükle
         run: |
-          cd $GITHUB_WORKSPACE/builds
+          cd $GITHUB_WORKSPACE/src
           git config --local user.email "actions@github.com"
           git config --local user.name "GitHub Actions"
+          # Eski derlemeleri temizle
+          if ls *.cs3 1> /dev/null 2>&1; then
+            rm *.cs3
+          fi
+          if [ -f "plugins.json" ]; then
+            rm plugins.json
+          fi
+          # Yeni derlemeleri kopyala
+          cp -f $GITHUB_WORKSPACE/output/*.cs3 ./ || echo "No .cs3 files to copy"
+          cp -f $GITHUB_WORKSPACE/output/plugins.json ./ || echo "No plugins.json to copy"
+          # Değişiklikleri commit'le
           git add .
-          git commit --amend -m "$GITHUB_SHA 'nın Derlenmesi" || exit 0
-          git push --force-with-lease
+          git diff --staged --quiet || git commit -m "$GITHUB_SHA 'nın Derlenmesi"
+          git push origin master
