@@ -29,9 +29,9 @@ jobs:
       - name: "'build' Depo Kontrolü"
         uses: actions/checkout@v4.2.2
         with:
-          ref: "builds"
+          ref: "master"
           path: "builds"
-          fetch-depth: 0
+
 
       - name: Eski Derlemeleri Temizle
         run: |
