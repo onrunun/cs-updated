@@ -20,8 +20,8 @@ jobs:
       - name: "Kaynak Kod Kontrolü"
         uses: actions/checkout@v4.2.2
         with:
-          path: "src"
           fetch-depth: 0
+          token: ${{ github.token }}
       - name: JDK 17 Ayarla
         uses: actions/setup-java@v4.6.0
         with:
@@ -29,30 +29,23 @@ jobs:
           java-version: 17
       - name: Android SDK Ayarla
         uses: android-actions/setup-android@v3.2.2
-      - name: Eklentileri Derle
+      - name: Eski Derlemeleri Temizle
         run: |
-          cd $GITHUB_WORKSPACE/src
-          chmod +x gradlew
-          ./gradlew make makePluginsJson
-          mkdir -p $GITHUB_WORKSPACE/output
-          cp **/build/*.cs3 $GITHUB_WORKSPACE/output/ || echo "No .cs3 files found to copy"
-          cp build/plugins.json $GITHUB_WORKSPACE/output/ || echo "No plugins.json found to copy"
-      - name: Derlemeleri Yükle
-        run: |
-          cd $GITHUB_WORKSPACE/src
-          git config --local user.email "actions@github.com"
-          git config --local user.name "GitHub Actions"
-          # Eski derlemeleri temizle
           if ls *.cs3 1> /dev/null 2>&1; then
             rm *.cs3
           fi
           if [ -f "plugins.json" ]; then
             rm plugins.json
           fi
-          # Yeni derlemeleri kopyala
-          cp -f $GITHUB_WORKSPACE/output/*.cs3 ./ || echo "No .cs3 files to copy"
-          cp -f $GITHUB_WORKSPACE/output/plugins.json ./ || echo "No plugins.json to copy"
-          # Değişiklikleri commit'le
-          git add .
+      - name: Eklentileri Derle
+        run: |
+          chmod +x gradlew
+          ./gradlew make makePluginsJson
+      - name: Derlemeleri Yükle
+        run: |
+          git config --local user.email "actions@github.com"
+          git config --local user.name "GitHub Actions"
+          git add *.cs3 plugins.json
           git diff --staged --quiet || git commit -m "$GITHUB_SHA 'nın Derlenmesi"
+          git pull --rebase origin master
           git push origin master
