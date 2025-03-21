@@ -33,21 +33,18 @@ jobs:
           path: "builds"
         continue-on-error: true  # Bu adım başarısız olsa bile devam et
 
-      - name: "Builds branch yoksa oluştur"
+      - name: "Builds sil oluştur"
         run: |
-          if [ ! -d "builds/.git" ]; then
-            mkdir -p builds
-            cd builds
-            git init
-            git config --local user.email "actions@github.com"
-            git config --local user.name "GitHub Actions"
-            git remote add origin https://github.com/${{ github.repository }}.git
-            git checkout -b builds
-            touch README.md
-            echo "# CloudStream Builds" > README.md
-            git add README.md
-            git commit -m "Initial commit for builds branch"
+          if [ -d "builds" ]; then
+            rm -rf builds
           fi
+          mkdir builds
+          cd builds
+          git init
+          git config --local user.email "actions@github.com"
+          git config --local user.name "GitHub Actions"
+          git remote add origin https://github.com/${{ github.repository }}.git
+          git checkout -b builds
 
       - name: Eski Derlemeleri Temizle
         run: rm $GITHUB_WORKSPACE/builds/*.cs3 || true
