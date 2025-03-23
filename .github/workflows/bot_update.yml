@@ -1,0 +1,15 @@
+name: Bot Güncellemeleri
+
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - "**/*.kt"
+
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Log Commit Info
+        run: echo "Bot tarafından yapılan güncelleme algılandı. Derleyici çalıştırılıyor..."
